@@ -109,7 +109,7 @@ class CompilationTests(BaseTestCase):
         compile_dict = {
             "slug": scratch.slug,
             "compiler": GCC281PM.id,
-            "compiler_flags": "-FOO=\"hello world\" '-DBAR=\"lorem ipsum\"'",
+            "compiler_flags": "-DFOO=bar '-DSTRING=\"hello world\"'",
             "source_code": "int add(int a, int b){\nreturn a + b;\n}\n",
         }
 
