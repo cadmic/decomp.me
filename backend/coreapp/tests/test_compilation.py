@@ -92,6 +92,35 @@ class CompilationTests(BaseTestCase):
 
         self.assertTrue(response.json()["success"])
 
+    @requiresCompiler(GCC281PM)
+    def test_spaces(self) -> None:
+        """
+        Ensure that we can handle spaces in a command line
+        """
+        sscratch_dict = {
+            "compiler": GCC281PM.id,
+            "platform": N64.id,
+            "context": "",
+            "target_asm": "glabel func_80929D04\njr $ra\nnop",
+        }
+
+        scratch = self.create_scratch(scratch_dict)
+
+        compile_dict = {
+            "slug": scratch.slug,
+            "compiler": GCC281PM.id,
+            "compiler_flags": "-FOO=\"hello world\" '-DBAR=\"lorem ipsum\"'",
+            "source_code": "int add(int a, int b){\nreturn a + b;\n}\n",
+        }
+
+        # Test that we can compile a scratch
+        response = self.client.post(
+            reverse("scratch-compile", kwargs={"pk": scratch.slug}), compile_dict
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        self.assertTrue(response.json()["success"])
+
     @requiresCompiler(IDO53)
     def test_ido_line_endings(self) -> None:
         """
