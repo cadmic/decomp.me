@@ -1,6 +1,7 @@
 import logging
 import os
 import re
+import shlex
 import subprocess
 from dataclasses import dataclass
 import time
@@ -90,7 +91,7 @@ class CompilerWrapper:
 
         skip_next = False
         flags = []
-        for flag in compiler_flags.split():
+        for flag in shlex.split(compiler_flags):
             if skip_next:
                 skip_next = False
                 continue
@@ -102,7 +103,7 @@ class CompilerWrapper:
             if any(flag.startswith(f) for f in skip_flags_with_args):
                 continue
             flags.append(flag)
-        return " ".join(flags)
+        return shlex.join(flags)
 
     @staticmethod
     def filter_compile_errors(input: str) -> str:
