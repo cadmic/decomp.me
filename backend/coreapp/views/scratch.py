@@ -261,7 +261,9 @@ def create_scratch(data: Dict[str, Any], allow_project: bool = False) -> Scratch
         )
 
     compiler_flags = data.get("compiler_flags", "")
+    logger.debug(f"Compiler flags: {compiler_flags}")
     compiler_flags = CompilerWrapper.filter_compiler_flags(compiler_flags)
+    logger.debug(f"Compiler flags (after filtering): {compiler_flags}")
 
     diff_flags = data.get("diff_flags", [])
 
