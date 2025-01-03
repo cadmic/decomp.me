@@ -93,11 +93,11 @@ class CompilationTests(BaseTestCase):
         self.assertTrue(response.json()["success"])
 
     @requiresCompiler(GCC281PM)
-    def test_spaces(self) -> None:
+    def test_spaces_in_command_line(self) -> None:
         """
         Ensure that we can handle spaces in a command line
         """
-        sscratch_dict = {
+        scratch_dict = {
             "compiler": GCC281PM.id,
             "platform": N64.id,
             "context": "",
